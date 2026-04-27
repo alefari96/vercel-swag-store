@@ -11,7 +11,7 @@ export default function Home() {
         subtitle="Exclusive merchandise for the modern developer. Premium quality, minimalist design, and developer-first aesthetics."
         ctaText="Shop Collection"
         ctaHref="/search"
-        backgroundImage="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2070"
+        backgroundImage="https://images.unsplash.com/photo-1775531994622-9c7ec9f017c9?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       />
 
       <main className="flex flex-col w-full mx-auto max-w-7xl px-6 py-20">

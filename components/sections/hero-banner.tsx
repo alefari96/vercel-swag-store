@@ -55,7 +55,7 @@ export function HeroBanner({
           {subtitle}
         </Typography>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Button size="lg" asChild className="h-12 px-8 text-base font-semibold">
+          <Button variant="secondary" size="lg" asChild className="h-12 px-8 text-base font-semibold">
             <a href={ctaHref}>{ctaText}</a>
           </Button>
         </div>

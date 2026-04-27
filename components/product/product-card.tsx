@@ -5,9 +5,10 @@ import type { Product } from '@/types'
 
 type ProductCardProps = {
   product: Product
+  eager?: boolean
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, eager }: ProductCardProps) {
   const price = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: product.currency || 'USD',
@@ -25,6 +26,8 @@ export function ProductCard({ product }: ProductCardProps) {
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              loading={eager ? 'eager' : undefined}
+              priority={eager}
             />
           ) : (
             <div className="flex h-full items-center justify-center">

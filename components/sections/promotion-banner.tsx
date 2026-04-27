@@ -9,7 +9,7 @@ export async function PromotionBanner() {
   }
 
   return (
-    <div className="flex bg-primary text-primary-foreground p-4 items-center justify-center gap-4">
+    <div className="flex flex-col gap-2 md:flex-row md:gap-4 bg-primary text-primary-foreground p-4 items-center justify-center">
       <Typography variant="h4">{promotions.title}</Typography>
       <Typography variant="p">{promotions.description}</Typography>
     </div>
