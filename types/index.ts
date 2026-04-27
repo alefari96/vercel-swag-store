@@ -38,11 +38,11 @@ type Product = {
   description: string;
   featured: boolean;
   id: string;
-  images: string [];
+  images: string[];
   name: string;
   price: number;
   slug: string;
-  tags: string[];  
+  tags: string[];
 }
 
 type StockInfo = {
@@ -114,6 +114,12 @@ type ErrorResponse = {
   success: boolean;
 }
 
+type CartContextValue = {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void
+}
+
 export type {
   CartItemWithProduct,
   CartWithProducts,
@@ -131,5 +137,6 @@ export type {
   AddToCartRequest,
   UpdateCartItemRequest,
   ErrorObject,
-  ErrorResponse
+  ErrorResponse,
+  CartContextValue
 }

@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl -s \"https://vercel-swag-store-api.vercel.app/api/docs\")"
+      "Bash(curl -s \"https://vercel-swag-store-api.vercel.app/api/docs\")",
+      "Bash(find /c/Users/al.farina/Vercel/vercel-swag-store/node_modules -path */shadcn/tailwind.css)",
+      "WebFetch(domain:vercel-swag-store-api.vercel.app)"
     ]
   }
 }

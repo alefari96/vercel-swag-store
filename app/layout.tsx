@@ -1,8 +1,16 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Suspense } from 'react'
 import './globals.css'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
+import { Toaster } from '@/components/ui/sonner'
+import { CartProvider } from '@/components/providers/cart-provider'
+import CartDrawer from '@/components/cart/cart-drawer'
+import CartDrawerContent from '@/components/cart/cart-drawer-content'
+import { CartDrawerSkeleton } from '@/components/cart/cart-drawer-skeleton'
+import { PromotionBanner } from '@/components/sections/promotion-banner'
+import { PromotionBannerSkeleton } from '@/components/sections/promotion-banner-skeleton'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,9 +47,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Header />
+          <div className="sticky top-[var(--header-height)] z-30">
+            <Suspense fallback={<PromotionBannerSkeleton />}>
+              <PromotionBanner />
+            </Suspense>
+          </div>
+          <CartDrawer>
+            <Suspense fallback={<CartDrawerSkeleton />}>
+              <CartDrawerContent />
+            </Suspense>
+          </CartDrawer>
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CartProvider>
+        <Toaster position="bottom-right" />
       </body>
     </html>
   )
