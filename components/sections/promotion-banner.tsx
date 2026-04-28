@@ -11,7 +11,7 @@ export async function PromotionBanner() {
   return (
     <div className="flex flex-col gap-2 md:flex-row md:gap-4 bg-primary text-primary-foreground p-4 items-center justify-center">
       <Typography variant="h4">{promotions.title}</Typography>
-      <Typography variant="p">{promotions.description}</Typography>
+      <Typography variant="p" className="text-center md:text-left">{promotions.description}</Typography>
     </div>
   );
 }
