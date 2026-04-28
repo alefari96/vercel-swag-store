@@ -80,12 +80,10 @@ export async function getPromotions(): Promise<PromotionResponse> {
 
 // ─── Uncached functions ────────────────────────────────────────────────────
 
-// Real-time stock — never cache
 export async function getStock(productId: string): Promise<StockResponse> {
   return apiFetch<StockResponse>(`/products/${productId}/stock`)
 }
 
-// Per-user cart — never cache
 export async function getCart(cartToken: string): Promise<CartResponse> {
   return apiFetch<CartResponse>('/cart', {
     headers: { 'x-cart-token': cartToken },

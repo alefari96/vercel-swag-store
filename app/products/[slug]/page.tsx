@@ -13,6 +13,22 @@ export async function generateStaticParams() {
 
 type Params = Promise<{ slug: string }>
 
+export async function generateMetadata({ params }: { params: Params }) {
+  const { slug } = await params
+  const { data: product } = await getProduct(slug).catch(() => ({ data: null }))
+  if (!product) return { title: 'Product Not Found' }
+
+  return {
+    title: product.name,
+    description: product.description,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: [{ url: product.images[0], alt: product.name }],
+    },
+  }
+}
+
 export default async function ProductPage({ params }: { params: Params }) {
   const { slug } = await params
   const { data: product } = await getProduct(slug).catch(() => ({ data: null }))

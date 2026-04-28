@@ -6,9 +6,11 @@ import { ProductGridSkeleton } from '@/components/product/product-card-skeleton'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Typography } from '@/components/ui/typography'
 
-export const metadata = {
-  title: 'Search — Vercel Swag',
-  description: 'Find your perfect Vercel swag.',
+export async function generateMetadata({ searchParams }: { searchParams: SearchParams }) {
+  const { q } = await searchParams
+  return {
+    title: q ? `Results for "${q}"` : 'Search',
+  }
 }
 
 type SearchParams = Promise<{ q?: string; category?: string }>
