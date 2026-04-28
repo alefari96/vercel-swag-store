@@ -11,6 +11,7 @@ import CartDrawerContent from '@/components/cart/cart-drawer-content'
 import { CartDrawerSkeleton } from '@/components/cart/cart-drawer-skeleton'
 import { PromotionBanner } from '@/components/sections/promotion-banner'
 import { PromotionBannerSkeleton } from '@/components/sections/promotion-banner-skeleton'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        <SpeedInsights />
         <CartProvider>
           <Header />
           <div className="sticky top-[var(--header-height)] z-30">
