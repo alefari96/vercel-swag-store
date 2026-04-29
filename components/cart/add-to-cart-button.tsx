@@ -1,7 +1,6 @@
 'use client'
 
 import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -13,14 +12,12 @@ type Props = { productId: string; quantity?: number; disabled?: boolean; classNa
 
 export function AddToCartButton({ productId, quantity = 1, disabled, className }: Props) {
   const { open } = useCart()
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   function handleAdd() {
     startTransition(async () => {
       try {
         await addToCart(productId, quantity)
-        router.refresh()
         open()
         toast.success('Added to cart')
       } catch {
