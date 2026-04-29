@@ -24,5 +24,5 @@ export default async function CartBadge() {
 }
 
 export function CartBadgeSkeleton() {
-  return <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-muted animate-pulse" />
+  return <span className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-muted animate-pulse" />
 }

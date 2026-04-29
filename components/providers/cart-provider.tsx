@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react"
+import { createContext, useContext, useState, type ReactNode } from "react"
 import { type CartContextValue } from "@/types"
 
 const CartContext = createContext<CartContextValue | undefined>(undefined)
@@ -10,24 +10,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
-  const value = useMemo(
-    () => ({
-      isOpen,
-      open,
-      close
-    }),
-    [isOpen]
-  )
+  const value = { isOpen, open, close }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
 
+const noopCart: CartContextValue = { isOpen: false, open: () => {}, close: () => {} }
+
 export function useCart(): CartContextValue {
-  const context = useContext(CartContext)
-
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider")
-  }
-
-  return context
+  return useContext(CartContext) ?? noopCart
 }
