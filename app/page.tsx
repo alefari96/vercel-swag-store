@@ -2,10 +2,15 @@ import { Suspense } from 'react'
 import { HeroBanner } from '@/components/sections/hero-banner'
 import { FeaturedProducts } from '@/components/sections/featured-products'
 import { ProductGridSkeleton } from '@/components/product/product-card-skeleton'
+import { PromotionBanner } from '@/components/sections/promotion-banner'
+import { PromotionBannerSkeleton } from '@/components/sections/promotion-banner-skeleton'
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen w-full">
+      <Suspense fallback={<PromotionBannerSkeleton />}>
+        <PromotionBanner />
+      </Suspense>
       <HeroBanner
         title="Vercel Swag Store"
         subtitle="Exclusive merchandise for the modern developer. Premium quality, minimalist design, and developer-first aesthetics."

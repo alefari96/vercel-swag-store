@@ -8,6 +8,7 @@ import { AddToCartButton } from '@/components/cart/add-to-cart-button'
 
 export function QuantitySelector({ productId, max }: { productId: string; max: number }) {
   const [qty, setQty] = useState(1)
+  const effectiveQty = Math.min(qty, max)
 
   return (
     <div className="flex items-center gap-3">
@@ -15,26 +16,26 @@ export function QuantitySelector({ productId, max }: { productId: string; max: n
         <Button
           variant="outline"
           size="icon"
-          onClick={() => setQty((q) => Math.max(1, q - 1))}
-          disabled={qty <= 1}
+          onClick={() => setQty((q) => Math.max(1, Math.min(q, max) - 1))}
+          disabled={effectiveQty <= 1}
           aria-label="Decrease quantity"
         >
           <Minus className="h-4 w-4" />
         </Button>
         <Button variant="outline" size="icon" disabled className="cursor-default opacity-100">
-          <span className="text-sm">{qty}</span>
+          <span className="text-sm">{effectiveQty}</span>
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={() => setQty((q) => Math.min(max, q + 1))}
-          disabled={qty >= max}
+          disabled={effectiveQty >= max}
           aria-label="Increase quantity"
         >
           <Plus className="h-4 w-4" />
         </Button>
       </ButtonGroup>
-      <AddToCartButton productId={productId} quantity={qty} />
+      <AddToCartButton productId={productId} quantity={effectiveQty} className="flex-1" />
     </div>
   )
 }

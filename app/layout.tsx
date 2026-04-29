@@ -9,8 +9,6 @@ import { CartProvider } from '@/components/providers/cart-provider'
 import CartDrawer from '@/components/cart/cart-drawer'
 import CartDrawerContent from '@/components/cart/cart-drawer-content'
 import { CartDrawerSkeleton } from '@/components/cart/cart-drawer-skeleton'
-import { PromotionBanner } from '@/components/sections/promotion-banner'
-import { PromotionBannerSkeleton } from '@/components/sections/promotion-banner-skeleton'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
@@ -24,6 +22,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: {
     default: 'Vercel Swag Store',
     template: '%s | Vercel Swag Store',
@@ -51,11 +50,6 @@ export default function RootLayout({
         <SpeedInsights />
         <CartProvider>
           <Header />
-          <div className="sticky top-[var(--header-height)] z-30">
-            <Suspense fallback={<PromotionBannerSkeleton />}>
-              <PromotionBanner />
-            </Suspense>
-          </div>
           <CartDrawer>
             <Suspense fallback={<CartDrawerSkeleton />}>
               <CartDrawerContent />

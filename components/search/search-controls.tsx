@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import { Search } from 'lucide-react'
+import { useState, useRef, useTransition } from 'react'
+import { Search, Loader2 } from 'lucide-react'
 import type { Category } from '@/types'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -12,35 +12,38 @@ export function SearchControls({ categories }: { categories: Category[] }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-
+  const [isPending, startTransition] = useTransition()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const [q, setQ] = useState(searchParams.get('q') ?? '')
-  const currentCategory = searchParams.get('category') ?? ''
 
-  function navigate(query: string) {
+  function pushParams(newQ: string, newCategory?: string) {
     const params = new URLSearchParams(searchParams.toString())
-    if (query.trim()) params.set('q', query.trim())
+    if (newQ.trim()) params.set('q', newQ.trim())
     else params.delete('q')
-    router.replace(`${pathname}?${params.toString()}`)
+    if (newCategory !== undefined) {
+      if (newCategory && newCategory !== 'all') params.set('category', newCategory)
+      else params.delete('category')
+    }
+    startTransition(() => router.replace(`${pathname}?${params.toString()}`))
   }
 
-  // Auto-trigger after 3+ chars or on clear, debounced 300ms
-  useEffect(() => {
-    if (q.length === 0 || q.length >= 3) {
-      const timer = setTimeout(() => navigate(q), 300)
-      return () => clearTimeout(timer)
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value
+    setQ(val)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    if (val.length >= 3 || val.length === 0) {
+      debounceRef.current = setTimeout(() => pushParams(val), 300)
     }
-  }, [q])
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    navigate(q)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    pushParams(q)
   }
 
   function handleCategory(value: string) {
-    const params = new URLSearchParams(searchParams.toString())
-    if (value && value !== 'all') params.set('category', value)
-    else params.delete('category')
-    router.replace(`${pathname}?${params.toString()}`)
+    pushParams(q, value)
   }
 
   return (
@@ -49,16 +52,23 @@ export function SearchControls({ categories }: { categories: Category[] }) {
         <Input
           type="search"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={handleChange}
           placeholder="Search products..."
           className="flex-1"
         />
-        <Button type="submit" size="icon" aria-label="Search">
-          <Search />
+        <Button type="submit" disabled={isPending} className="gap-2 min-w-32 shrink-0">
+          {isPending
+            ? <><Loader2 className="size-4 animate-spin" />Searching...</>
+            : <><Search className="size-4" />Search</>
+          }
         </Button>
       </form>
-      <Select value={currentCategory || 'all'} onValueChange={handleCategory}>
-        <SelectTrigger className="sm:w-48">
+      <Select
+        value={searchParams.get('category') || 'all'}
+        onValueChange={handleCategory}
+        disabled={isPending}
+      >
+        <SelectTrigger className="w-full sm:w-48 shrink-0">
           <SelectValue placeholder="All categories" />
         </SelectTrigger>
         <SelectContent>

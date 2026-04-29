@@ -1,13 +1,13 @@
 import { Suspense } from 'react'
-import Image from 'next/image'                                                                                                          
-import { notFound } from 'next/navigation'                                                                                              
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@/lib/api'
-import { ProductActions } from '@/components/product/product-actions'                                                                   
-import { ProductActionsSkeleton } from '@/components/product/product-actions-skeleton'                                                  
+import { ProductActions } from '@/components/product/product-actions'
+import { ProductActionsSkeleton } from '@/components/product/product-actions-skeleton'
 import { Typography } from '@/components/ui/typography'
 
 export async function generateStaticParams() {
-  const { data } = await getProducts({ limit: 100 })
+  const { data } = await getProducts({ limit: 1 })
   return data.map((p) => ({ slug: p.slug }))
 }
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     openGraph: {
       title: product.name,
       description: product.description,
-      images: [{ url: product.images[0], alt: product.name }],
+      images: [{ url: `/products/${slug}/opengraph-image` }],
     },
   }
 }

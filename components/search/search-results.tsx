@@ -9,8 +9,9 @@ export async function SearchResults({ searchParams }: { searchParams: SearchPara
 
   if (products.length === 0) {
     return (
-      <div className="py-20 text-center text-muted-foreground">
-        No products found{q ? ` for "${q}"` : ''}.
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <p className="text-base font-medium">No products found{q ? ` for "${q}"` : ''}</p>
+        <p className="text-sm text-muted-foreground mt-1">Try a different search term or category</p>
       </div>
     )
   }

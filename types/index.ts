@@ -45,6 +45,14 @@ type Product = {
   tags: string[];
 }
 
+type ProductsParams = {
+  search?: string
+  category?: string
+  featured?: boolean
+  page?: number
+  limit?: number
+}
+
 type StockInfo = {
   inStock: boolean;
   lowStock: boolean;
@@ -126,6 +134,7 @@ export type {
   Category,
   PaginationMeta,
   Product,
+  ProductsParams,
   StockInfo,
   Promotion,
   ProductListResponse,
