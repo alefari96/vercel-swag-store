@@ -9,8 +9,6 @@ import { CartProvider } from '@/components/providers/cart-provider'
 import CartDrawer from '@/components/cart/cart-drawer'
 import CartDrawerContent from '@/components/cart/cart-drawer-content'
 import { CartDrawerSkeleton } from '@/components/cart/cart-drawer-skeleton'
-import { PromotionBanner } from '@/components/sections/promotion-banner'
-import { PromotionBannerSkeleton } from '@/components/sections/promotion-banner-skeleton'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
@@ -52,11 +50,6 @@ export default function RootLayout({
         <SpeedInsights />
         <CartProvider>
           <Header />
-          <div className="sticky top-[var(--header-height)] z-30">
-            <Suspense fallback={<PromotionBannerSkeleton />}>
-              <PromotionBanner />
-            </Suspense>
-          </div>
           <CartDrawer>
             <Suspense fallback={<CartDrawerSkeleton />}>
               <CartDrawerContent />
